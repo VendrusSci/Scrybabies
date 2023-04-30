@@ -1,0 +1,70 @@
+.Scry-layout {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.Scry-configpart {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+}
+
+.Scry-body {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    color: white;
+    flex-wrap: wrap;
+    min-width: 250px;
+}
+
+.Scry-gene {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    color: white;
+    flex-wrap: wrap;
+    min-width: 250px;
+}
+
+.Scry-label {
+    white-space: pre;
+}
+
+.Scry-configlabel {
+    padding-bottom: 5px;
+}
+
+.Scry-generatebutton {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+.Scry-padbottom10 {
+    padding-bottom: 10px;
+}
+
+.Scry-offspringbutton{
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
