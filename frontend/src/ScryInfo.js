@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import {Tooltip} from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import './CSS/ScryInfo.css';
 import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes } from "./Data/Data.js";
 
@@ -58,12 +62,13 @@ export function ScryInfo(props){
                 tertColour: 1,
             });
     }
-
     return (
         <div className="Scry-body">
             <div className='Scry-gene Scry-padbottom10'>
                 <label className='Scry-label'>Scry URL: </label>
                 <input className='' value={url} onChange={onScryUrlChange} type="text"/>
+                <FontAwesomeIcon data-tooltip-id="scry" data-tooltip-html="<p>The url from the link widget in the scrying workshop</p><image src='https://i.imgur.com/YbNBezj.png'/>" 
+                    icon={faCircleQuestion}/>
             </div>
             <div className='Scry-gene'>
                 <label className='Scry-label'>Breed: </label>
@@ -81,6 +86,7 @@ export function ScryInfo(props){
                 <label className='Scry-label'>Tertiary: </label>
                 <label>{colours[props.dragonInfo.tertColour].name} {tertiaryGenes[props.dragonInfo.tertGene].name}</label>
             </div>
+            <Tooltip id="scry" />
         </div>
     );
 }
