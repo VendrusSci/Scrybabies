@@ -10,24 +10,25 @@ import { PreviewOffsping } from './PreviewOffspring.js';
 function App() {
   return (
     <div className="App">
-      <div><Toaster/></div>
-      <header>
-        <Navbar/>
-      </header>
+      <div><Toaster /></div>
+
       <BrowserRouter>
+        <header>
+          <Navbar />
+        </header>
         <Routes>
           <Route path="/" element={
-            <PreviewOffsping/>}>
+            <PreviewOffsping />}>
           </Route>
           <Route path="/about" element={
-            <About/>}>
+            <About />}>
           </Route>
         </Routes>
       </BrowserRouter>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <div className='App-footer'>
-        <p>All dragon breeds, genes and colours  property of <a className='App-link' href="https://www.flightrising.com">Flight Rising</a> © Stormlight Workshop LLC<br/></p>
+        <p>All dragon breeds, genes and colours  property of <a className='App-link' href="https://www.flightrising.com">Flight Rising</a> © Stormlight Workshop LLC<br /></p>
       </div>
     </div>
   );

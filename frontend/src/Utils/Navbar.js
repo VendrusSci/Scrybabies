@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
@@ -20,7 +21,7 @@ export function Navbar(){
                         <a href="/">Generate Offspring</a>
                     </li>
                     <li>
-                        <a href="/about">About</a>
+                        <Link to="/about">About</Link>
                     </li>
                     <li>
                         <a href="https://github.com/VendrusSci/Scrybabies">Source Code</a>

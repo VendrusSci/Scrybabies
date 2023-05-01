@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { ScryConfig } from "./ScryConfig";
 import { ScryInfo } from "./ScryInfo";
+import { ScryWorkshop } from "./ScryWorkshop";
 import ToggleSwitch from './Utils/ToggleSwitch';
 import {breeds, rarities, primaryGenes, secondaryGenes, tertiaryGenes, rarityTable} from "./Data/Data.js";
 import { generateLink } from './LinkGenerator';
@@ -34,19 +35,17 @@ export function PreviewOffsping(){
     const[linkCount, setLinkCount] = useState(4);
     const[links, setLinks] = useState();
     const[showRarityInfo, setShowRarityInfo] = useState(false);
+    const[workshopMode, setWorkshopMode] = useState(false);
 
     useEffect(() => {
-        var temp1 = breeds[dragon1Info.breed].rarity
-
-
         setDragon1Calc(
             {
                 breedRarity: rarities[breeds[dragon1Info.breed].rarity],
                 breedPercent: rarityTable[breeds[dragon2Info.breed].rarity][breeds[dragon1Info.breed].rarity] * 100,
                 primRarity: rarities[primaryGenes[dragon1Info.primGene].rarity],
                 primPercent: rarityTable[primaryGenes[dragon2Info.primGene].rarity][primaryGenes[dragon1Info.primGene].rarity] * 100,
-                secRarity: rarities[primaryGenes[dragon1Info.secGene].rarity],
-                secPercent: rarityTable[primaryGenes[dragon2Info.secGene].rarity][primaryGenes[dragon1Info.secGene].rarity] * 100,
+                secRarity: rarities[secondaryGenes[dragon1Info.secGene].rarity],
+                secPercent: rarityTable[secondaryGenes[dragon2Info.secGene].rarity][secondaryGenes[dragon1Info.secGene].rarity] * 100,
                 tertRarity: rarities[tertiaryGenes[dragon1Info.tertGene].rarity],
                 tertPercent: rarityTable[tertiaryGenes[dragon2Info.tertGene].rarity][tertiaryGenes[dragon1Info.tertGene].rarity] * 100,
             }
@@ -58,8 +57,8 @@ export function PreviewOffsping(){
                 breedPercent: rarityTable[breeds[dragon1Info.breed].rarity][breeds[dragon2Info.breed].rarity] * 100,
                 primRarity: rarities[primaryGenes[dragon2Info.primGene].rarity],
                 primPercent: rarityTable[primaryGenes[dragon1Info.primGene].rarity][primaryGenes[dragon2Info.primGene].rarity] * 100,
-                secRarity: rarities[primaryGenes[dragon2Info.secGene].rarity],
-                secPercent: rarityTable[primaryGenes[dragon1Info.secGene].rarity][primaryGenes[dragon2Info.secGene].rarity] * 100,
+                secRarity: rarities[secondaryGenes[dragon2Info.secGene].rarity],
+                secPercent: rarityTable[secondaryGenes[dragon1Info.secGene].rarity][secondaryGenes[dragon2Info.secGene].rarity] * 100,
                 tertRarity: rarities[tertiaryGenes[dragon2Info.tertGene].rarity],
                 tertPercent: rarityTable[tertiaryGenes[dragon1Info.tertGene].rarity][tertiaryGenes[dragon2Info.tertGene].rarity] * 100,
             }
@@ -69,7 +68,7 @@ export function PreviewOffsping(){
     function generateLinks(){
         if(breeds[dragon1Info.breed].isAncient || breeds[dragon1Info.breed].isAncient){
             if(dragon1Info.breed !== dragon2Info.breed){
-                toast.error("Incompatible ancient breeds selected");
+                toast.error("Incompatible breeds selected");
                 setLinks([]);
                 return;
             }
@@ -98,15 +97,24 @@ export function PreviewOffsping(){
                 <ScryConfig age={age} setAge={setAge} element={element} setElement={setElement} linkCount={linkCount} setLinkCount={setLinkCount}/>
                 <button className='Scry-generatebutton' onClick={generateLinks}>Generate!</button>
                 <div className="Scry-layout">
-                    <ScryInfo dragonInfo={dragon1Info} setDragonInfo={setDragon1Info} dragonCalc={dragon1Calc} showRarityInfo={showRarityInfo}/>
+                    { workshopMode ? <ScryWorkshop dragonInfo={dragon1Info} setDragonInfo={setDragon1Info} dragonCalc={dragon1Calc} showRarityInfo={showRarityInfo}/> 
+                                    : <ScryInfo dragonInfo={dragon1Info} setDragonInfo={setDragon1Info} dragonCalc={dragon1Calc} showRarityInfo={showRarityInfo}/>}
+                    
                     <div className="Scry-body">
                         {links ? links.map((link, index) => <button className="Scry-offspringbutton" onClick={() => openOffspringLink(link)} >Offspring {index + 1}</button>) : ""}
                     </div>
-                    <ScryInfo dragonInfo={dragon2Info} setDragonInfo={setDragon2Info} dragonCalc={dragon2Calc} showRarityInfo={showRarityInfo}/>
+
+                    { workshopMode ? <ScryWorkshop dragonInfo={dragon2Info} setDragonInfo={setDragon2Info} dragonCalc={dragon2Calc} showRarityInfo={showRarityInfo}/> 
+                                   : <ScryInfo dragonInfo={dragon2Info} setDragonInfo={setDragon2Info} dragonCalc={dragon2Calc} showRarityInfo={showRarityInfo}/>}
                 </div>
                 <div className="Scry-layout Scry-togglearea">
                     <label className='Scry-label'>Show rarity info:  </label>
                     <ToggleSwitch isToggled={showRarityInfo} setIsToggled={setShowRarityInfo}/>
+                </div>
+                <div className="Scry-layout Scry-togglearea">
+                    <label className='Scry-label'>Scry URL mode  </label>
+                    <ToggleSwitch isToggled={workshopMode} setIsToggled={setWorkshopMode}/>
+                    <label className='Scry-label'>  Workshop mode </label>
                 </div>
             </div>
         </div>

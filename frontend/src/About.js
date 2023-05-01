@@ -14,8 +14,6 @@ export function About(){
                 <br/>
                 <h2>Planned updates</h2>
                 <p>
-                    - Toggle between scry url and scrying workshop-style input
-                    - Breeding-only eyes with probabilities applied
                     - General UI tidy-up
                 </p>
             </div>

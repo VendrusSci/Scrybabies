@@ -5,7 +5,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import './CSS/ScryInfo.css';
-import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes, rarities } from "./Data/Data.js";
+import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes } from "./Data/Data.js";
 
 export function ScryInfo(props){
     

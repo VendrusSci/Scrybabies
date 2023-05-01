@@ -33,6 +33,10 @@
     min-width: 250px;
 }
 
+.Scry-links{
+    min-width: 150px;
+}
+
 .Scry-gene {
     background-color: #282c34;
     display: flex;
@@ -42,7 +46,7 @@
     font-size: 16px;
     color: white;
     flex-wrap: wrap;
-    min-width: 250px;
+    min-width: 300px;
 }
 
 .Scry-label {
@@ -78,4 +82,29 @@
     font-size: 14px;
     align-self: flex-end;
     margin-bottom: 5px;
+}
+
+.Workshop-body {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    color: white;
+    flex-wrap: wrap;
+    min-width: 300px;
+}
+
+.Workshop-gene {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    color: white;
+    flex-wrap: wrap;
+    min-width: 300px;
+    margin-top: 5px;
 }
