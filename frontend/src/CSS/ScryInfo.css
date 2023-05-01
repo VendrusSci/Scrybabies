@@ -68,3 +68,14 @@
     margin-bottom: 5px;
     padding-left: 5px;
 }
+
+.Scry-togglearea {
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+.Scry-rarityInfo{
+    color: rgb(206, 206, 206);
+    font-size: 14px;
+    align-self: flex-end;
+    margin-bottom: 5px;
+}

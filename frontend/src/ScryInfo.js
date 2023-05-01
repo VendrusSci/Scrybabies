@@ -5,7 +5,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 import './CSS/ScryInfo.css';
-import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes } from "./Data/Data.js";
+import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes, rarities } from "./Data/Data.js";
 
 export function ScryInfo(props){
     
@@ -74,18 +74,22 @@ export function ScryInfo(props){
                 <label className='Scry-label'>Breed: </label>
                 <label>{breeds[props.dragonInfo.breed].name}</label>
             </div>
+            {props.showRarityInfo ? <label className='Scry-rarityInfo'>{props.dragonCalc.breedRarity}, {props.dragonCalc.breedPercent}%</label> : "" }
             <div className='Scry-gene'>
                 <label className='Scry-label'>Primary: </label>
                 <label>{colours[props.dragonInfo.primColour].name} {primaryGenes[props.dragonInfo.primGene].name}</label>
             </div>
+            {props.showRarityInfo ? <label className='Scry-rarityInfo'>{props.dragonCalc.primRarity}, {props.dragonCalc.primPercent}%</label> : "" }
             <div className='Scry-gene'>
                 <label className='Scry-label'>Secondary: </label>
                 <label>{colours[props.dragonInfo.secColour].name} {secondaryGenes[props.dragonInfo.secGene].name}</label>
             </div>
+            {props.showRarityInfo ? <label className='Scry-rarityInfo'>{props.dragonCalc.secRarity}, {props.dragonCalc.secPercent}%</label> : "" }
             <div className='Scry-gene'>
                 <label className='Scry-label'>Tertiary: </label>
                 <label>{colours[props.dragonInfo.tertColour].name} {tertiaryGenes[props.dragonInfo.tertGene].name}</label>
             </div>
+            {props.showRarityInfo ? <label className='Scry-rarityInfo'>{props.dragonCalc.tertRarity}, {props.dragonCalc.tertPercent}%</label> : "" }
             <Tooltip id="scry" />
         </div>
     );

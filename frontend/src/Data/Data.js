@@ -1,10 +1,10 @@
-export const rarities = {
-    0: { name: "Plentiful" },
-    1: { name: "Common" },
-    2: { name: "Uncommon" },
-    3: { name: "Limited" },
-    4: { name: "Rare"}
-}
+export const rarities = [
+    "Plentiful",
+    "Common",
+    "Uncommon",
+    "Limited",
+    "Rare"
+]
 
 export const rarityTable = [
     [ 0.5,  0.3,  0.15, 0.03, 0.01 ], //plentiful

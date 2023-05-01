@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { ScryConfig } from "./ScryConfig";
 import { ScryInfo } from "./ScryInfo";
-import {rarityTable, breeds, colours, primaryGenes, secondaryGenes, tertiaryGenes} from "./Data/Data.js";
+import ToggleSwitch from './Utils/ToggleSwitch';
+import {breeds, rarities, primaryGenes, secondaryGenes, tertiaryGenes, rarityTable} from "./Data/Data.js";
+import { generateLink } from './LinkGenerator';
 
 export function PreviewOffsping(){
 
@@ -24,12 +26,45 @@ export function PreviewOffsping(){
         tertGene: 0,
         tertColour: 1,
     });
+    const[dragon1Calc, setDragon1Calc] = useState();
+    const[dragon2Calc, setDragon2Calc] = useState();
+
     const[age, setAge] = useState("0");
     const[element, setElement] = useState(0);
     const[linkCount, setLinkCount] = useState(4);
     const[links, setLinks] = useState();
+    const[showRarityInfo, setShowRarityInfo] = useState(false);
 
-    const maxRange = 88;
+    useEffect(() => {
+        var temp1 = breeds[dragon1Info.breed].rarity
+
+
+        setDragon1Calc(
+            {
+                breedRarity: rarities[breeds[dragon1Info.breed].rarity],
+                breedPercent: rarityTable[breeds[dragon2Info.breed].rarity][breeds[dragon1Info.breed].rarity] * 100,
+                primRarity: rarities[primaryGenes[dragon1Info.primGene].rarity],
+                primPercent: rarityTable[primaryGenes[dragon2Info.primGene].rarity][primaryGenes[dragon1Info.primGene].rarity] * 100,
+                secRarity: rarities[primaryGenes[dragon1Info.secGene].rarity],
+                secPercent: rarityTable[primaryGenes[dragon2Info.secGene].rarity][primaryGenes[dragon1Info.secGene].rarity] * 100,
+                tertRarity: rarities[tertiaryGenes[dragon1Info.tertGene].rarity],
+                tertPercent: rarityTable[tertiaryGenes[dragon2Info.tertGene].rarity][tertiaryGenes[dragon1Info.tertGene].rarity] * 100,
+            }
+        );
+
+        setDragon2Calc(
+            {
+                breedRarity: rarities[breeds[dragon2Info.breed].rarity],
+                breedPercent: rarityTable[breeds[dragon1Info.breed].rarity][breeds[dragon2Info.breed].rarity] * 100,
+                primRarity: rarities[primaryGenes[dragon2Info.primGene].rarity],
+                primPercent: rarityTable[primaryGenes[dragon1Info.primGene].rarity][primaryGenes[dragon2Info.primGene].rarity] * 100,
+                secRarity: rarities[primaryGenes[dragon2Info.secGene].rarity],
+                secPercent: rarityTable[primaryGenes[dragon1Info.secGene].rarity][primaryGenes[dragon2Info.secGene].rarity] * 100,
+                tertRarity: rarities[tertiaryGenes[dragon2Info.tertGene].rarity],
+                tertPercent: rarityTable[tertiaryGenes[dragon1Info.tertGene].rarity][tertiaryGenes[dragon2Info.tertGene].rarity] * 100,
+            }
+        );
+    }, [dragon1Info, dragon2Info]);
 
     function generateLinks(){
         if(breeds[dragon1Info.breed].isAncient || breeds[dragon1Info.breed].isAncient){
@@ -42,46 +77,10 @@ export function PreviewOffsping(){
 
         let linkArray = [];
         for(let i = 0; i < linkCount; i++){
-            linkArray.push(generateLink());
+            linkArray.push(generateLink(dragon1Info, dragon2Info, element, age));
         }
         setLinks(linkArray);
         toast.success("Offspring links generated!");      
-    }
-
-    function generateLink(){
-        let elementcorrected = (Number(element) + 1).toString();
-        let breed = selectBinaryOutcome(dragon1Info.breed, dragon2Info.breed, rarityTable[breeds[dragon1Info.breed].rarity][breeds[dragon2Info.breed].rarity]);
-        let gender = selectBinaryOutcome(0, 1, 0.5);
-        let primgene = selectBinaryOutcome(dragon1Info.primGene, dragon2Info.primGene, rarityTable[primaryGenes[dragon1Info.primGene].rarity][primaryGenes[dragon2Info.primGene].rarity]);
-        let primcolour = selectColourOutcome(dragon1Info.primColour, dragon2Info.primColour);
-        let secgene = selectBinaryOutcome(dragon1Info.secGene, dragon2Info.secGene, rarityTable[secondaryGenes[dragon1Info.secGene].rarity][secondaryGenes[dragon2Info.secGene].rarity]);
-        let seccolour = selectColourOutcome(dragon1Info.secColour, dragon2Info.secColour);
-        let tertgene = selectBinaryOutcome(dragon1Info.tertGene, dragon2Info.tertGene, rarityTable[tertiaryGenes[dragon1Info.tertGene].rarity][tertiaryGenes[dragon2Info.tertGene].rarity]);
-        let tertcolour = selectColourOutcome(dragon1Info.tertColour, dragon2Info.tertColour);
-        return `https://www1.flightrising.com/scrying/predict?breed=${breed}&gender=${gender}&age=${age}&bodygene=${primgene}&body=${primcolour}&winggene=${secgene}&wings=${seccolour}&tertgene=${tertgene}&tert=${tertcolour}&element=${elementcorrected}`;
-    }
-
-    function selectBinaryOutcome(option1, option2, option1Chance){
-        let result = Math.random();
-        if(result > option1Chance)
-            return option1;
-        else
-            return option2;
-    }
-
-    function selectColourOutcome(colour1, colour2){
-        var rangeSize = Math.abs(colour1 - colour2);
-        var colourSet = []
-        if(rangeSize > maxRange){
-            //need to go up from the highest one and down from the lowest one
-            colourSet = Object.entries(colours).filter( ([key, _]) => key >= Math.max(colour1, colour2) || key <= Math.min(colour1, colour2) );
-        }
-        else{
-            colourSet = Object.entries(colours).filter( ([key, _]) => key <= Math.max(colour1, colour2)
-                                                            && key >= Math.min(colour1, colour2) );
-        }
-        colourSet = colourSet.map(obj => obj[1]);
-        return colourSet[Math.floor(Math.random() * colourSet.length)].id;
     }
 
     function openOffspringLink(url){
@@ -99,11 +98,15 @@ export function PreviewOffsping(){
                 <ScryConfig age={age} setAge={setAge} element={element} setElement={setElement} linkCount={linkCount} setLinkCount={setLinkCount}/>
                 <button className='Scry-generatebutton' onClick={generateLinks}>Generate!</button>
                 <div className="Scry-layout">
-                    <ScryInfo dragonInfo={dragon1Info} setDragonInfo={setDragon1Info}/>
+                    <ScryInfo dragonInfo={dragon1Info} setDragonInfo={setDragon1Info} dragonCalc={dragon1Calc} showRarityInfo={showRarityInfo}/>
                     <div className="Scry-body">
                         {links ? links.map((link, index) => <button className="Scry-offspringbutton" onClick={() => openOffspringLink(link)} >Offspring {index + 1}</button>) : ""}
                     </div>
-                    <ScryInfo dragonInfo={dragon2Info} setDragonInfo={setDragon2Info}/>
+                    <ScryInfo dragonInfo={dragon2Info} setDragonInfo={setDragon2Info} dragonCalc={dragon2Calc} showRarityInfo={showRarityInfo}/>
+                </div>
+                <div className="Scry-layout Scry-togglearea">
+                    <label className='Scry-label'>Show rarity info:  </label>
+                    <ToggleSwitch isToggled={showRarityInfo} setIsToggled={setShowRarityInfo}/>
                 </div>
             </div>
         </div>
