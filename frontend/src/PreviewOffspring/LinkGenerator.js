@@ -1,4 +1,4 @@
-import {rarityTable, breeds, colours, primaryGenes, secondaryGenes, tertiaryGenes} from "./Data/Data.js";
+import {rarityTable, breeds, colours, primaryGenes, secondaryGenes, tertiaryGenes} from "../Data/Data.js";
 
 const maxRange = 88;
 

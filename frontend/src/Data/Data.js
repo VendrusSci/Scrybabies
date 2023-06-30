@@ -219,7 +219,12 @@ export const primaryGenes = {
     177: { name: "Skink (Gaoler)",          breed: 17,  rarity: 3 },
     178: { name: "Slime (Gaoler)",          breed: 17,  rarity: 3 },
     179: { name: "Swirl (Gaoler)",          breed: 17,  rarity: 1 },
-    180: { name: "Stitched (Gaoler)",       breed: 17,  rarity: 3 }
+    180: { name: "Stitched (Gaoler)",       breed: 17,  rarity: 3 },
+    181: { name: "Bar (Banescale)",         breed: 18,  rarity: 2 },
+    182: { name: "Crystal (Banescale)",     breed: 18,  rarity: 4 },
+    183: { name: "Ribbon (Banescale)",      breed: 18,  rarity: 2 },
+    184: { name: "Tide (Banescale)",        breed: 18,  rarity: 3 },
+    185: { name: "Pharaoh (Banescale)",     breed: 18,  rarity: 4 }
 }
 
 export const secondaryGenes = {
@@ -403,7 +408,12 @@ export const secondaryGenes = {
     177: { name: "Sludge (Gaoler)",             breed: 17,  rarity: 3 },
     178: { name: "Marbled (Gaoler)",            breed: 17,  rarity: 1 },
     179: { name: "Patchwork (Gaoler)",          breed: 17,  rarity: 3 },
-    180: { name: "Clouded (Gaoler)",            breed: 17,  rarity: 1 }
+    180: { name: "Clouded (Gaoler)",            breed: 17,  rarity: 1 },
+    181: { name: "Daub (Banescale)",            breed: 18,  rarity: 2 },
+    182: { name: "Facet (Banescale)",           breed: 18,  rarity: 4 },
+    183: { name: "Eel (Banescale)",             breed: 18,  rarity: 2 },
+    184: { name: "Foam (Banescale)",            breed: 18,  rarity: 3 },
+    185: { name: "Sarcophagus (Banescale)",     breed: 18,  rarity: 4 }
 }
 
 export const tertiaryGenes = {
@@ -519,7 +529,7 @@ export const tertiaryGenes = {
     109: { name: "Underbelly (Undertide)",      breed: 21,  rarity: 1 },
     110: { name: "Stained (Undertide)",         breed: 21,  rarity: 4 },
     111: { name: "Capsule (Undertide)",         breed: 21,  rarity: 3 },
-    112: { name: "Flecks (Undertide)",          breed: 21,  rarity: 2 },
+    112: { name: "Flecks (Undertide)",          breed: 21,  rarity: 3 },
     113: { name: "Veined (Undertide)",          breed: 21,  rarity: 3 },
     114: { name: "Runes (Undertide)",           breed: 21,  rarity: 3 },
     115: { name: "Crackle (Undertide)",         breed: 21,  rarity: 2 },
@@ -564,7 +574,18 @@ export const tertiaryGenes = {
     154: { name: "Whiskers (Aether)",           breed: 22,  rarity: 2 },
     155: { name: "Wish (Aether)",               breed: 22,  rarity: 4 },
     156: { name: "Angler (Gaoler)",             breed: 17,  rarity: 3 },
-    157: { name: "Contour (Gaoler)",            breed: 17,  rarity: 1 }
+    157: { name: "Contour (Gaoler)",            breed: 17,  rarity: 1 },
+    158: { name: "Monarch (Banescale)",         breed: 18,  rarity: 4 },
+    159: { name: "Soap (Banescale)",            breed: 18,  rarity: 4 },
+    160: { name: "Spines (Banescale)",          breed: 18,  rarity: 2 },
+    161: { name: "Firebreather",                breed: 0,   rarity: 3 },
+    162: { name: "Carnivore (Aberration)",      breed: 20,  rarity: 3 },
+    163: { name: "Carnivore (Aether)",          breed: 22,  rarity: 3 },
+    164: { name: "Carnivore (Banescale)",       breed: 18,  rarity: 3 },
+    165: { name: "Carnivore (Undertide)",       breed: 21,  rarity: 3 },
+    166: { name: "Carnivore (Gaoler)",          breed: 17,  rarity: 3 },
+    167: { name: "Carnivore (Veilspun)",        breed: 19,  rarity: 3 },
+    168: { name: "Polkadot",                    breed: 0,   rarity: 3 }
 }
 
 export const colours = {

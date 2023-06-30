@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { ScryConfig } from "./ScryConfig";
-import { ScryInfo } from "./ScryInfo";
+import { ScryInfo } from "../Utils/ScryInfo";
 import { ScryWorkshop } from "./ScryWorkshop";
-import ToggleSwitch from './Utils/ToggleSwitch';
-import {breeds, rarities, primaryGenes, secondaryGenes, tertiaryGenes, rarityTable} from "./Data/Data.js";
+import ToggleSwitch from '../Utils/ToggleSwitch';
+import {breeds, rarities, primaryGenes, secondaryGenes, tertiaryGenes, rarityTable} from "../Data/Data.js";
 import { generateLink } from './LinkGenerator';
 
 export function PreviewOffsping(){

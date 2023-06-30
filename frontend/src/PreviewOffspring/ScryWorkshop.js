@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './CSS/ScryInfo.css';
-import { ColourDropdown, GeneDropdown, BreedDropdown } from './Utils/DragonDropdowns';
-import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes } from "./Data/Data.js";
+import '../CSS/ScryInfo.css';
+import { ColourDropdown, GeneDropdown, BreedDropdown } from '../Utils/DragonDropdowns';
+import { colours, breeds, primaryGenes, secondaryGenes, tertiaryGenes } from "../Data/Data.js";
 
 export function ScryWorkshop(props){
 

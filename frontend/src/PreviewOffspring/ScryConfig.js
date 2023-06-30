@@ -1,4 +1,4 @@
-import {elements} from "./Data/Data.js"; 
+import {elements} from "../Data/Data.js"; 
 
 export function ScryConfig(props){
 
