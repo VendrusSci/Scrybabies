@@ -5,6 +5,7 @@ import { RangeConfig } from './RangeConfig';
 
 import '../CSS/ScryInfo.css';
 import '../CSS/SearchUrl.css';
+import { SearchUrls } from './SearchUrls';
 
 export function SearchUrlGenerator(){
 
@@ -107,7 +108,7 @@ export function SearchUrlGenerator(){
             <div className="Scry-body">
                 <label className='SearchUrl-heading'><b>Auto-generate ranges</b></label>
 
-                <div className='Scry-gene'>
+                <div className='SearchUrl-labelInput'>
                     <label className='Scry-label'>Apply to all colours</label>
                     <input type='checkbox' checked={rangeAllColours} onChange={(e) => setRangeAllColours(e.target.checked)}/>
                 </div>
@@ -125,6 +126,11 @@ export function SearchUrlGenerator(){
                     <RangeViewer firstColour={secFirstColour} secondColour={secSecondColour} setFirst={setSecFirstColour} setSecond={setSecSecondColour}/>
                     <RangeViewer firstColour={tertFirstColour} secondColour={tertSecondColour} setFirst={setTertFirstColour} setSecond={setTertSecondColour}/>
                 </div>
+                <br/>
+                <br/>
+                <SearchUrls primFirstColour={primFirstColour} primSecondColour={primSecondColour}
+                            secFirstColour={secFirstColour} secSecondColour={secSecondColour}
+                            tertFirstColour={tertFirstColour} tertSecondColour={tertSecondColour}/>
             </div>
         </div>
     );

@@ -32,7 +32,13 @@
 .SearchUrl-rangeConfigArea{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.SearchUrl-searchArea{
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
 }
