@@ -57,6 +57,26 @@ export function ColourDropdown(props){
     );
 }
 
+export function ColourIndexDropdown(props){
+    const onChange = (e) => {
+        props.setColour(e.target.value);
+    };
+
+    return(
+        <select
+            className='colour-dropdown'
+            style={{backgroundColor: props.colours[props.colour].hexcode, color: props.colours[props.colour].text }}
+            value={props.colour}
+            onChange={onChange}>
+        {   
+            Object.entries(props.colours)
+                .map(([colour], index) => <option style={{backgroundColor: colour.hexcode, color: colour.text }} 
+                                                key={index} value={index}>{colour.name}</option>)
+        }
+        </select>
+    );
+}
+
 export function BreedDropdown(props){
 
     const onChange = (e) => {

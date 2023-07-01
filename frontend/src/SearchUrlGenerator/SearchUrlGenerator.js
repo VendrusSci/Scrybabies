@@ -9,9 +9,9 @@ import { SearchUrls } from './SearchUrls';
 
 export function SearchUrlGenerator(){
 
-    const [selectedPrimGeneRarities, setSelectedPrimGeneRarities] = useState([]);
-    const [selectedSecGeneRarities, setSelectedSecGeneRarities] = useState([]);
-    const [selectedTertGeneRarities, setSelectedTertGeneRarities] = useState([]);
+    // const [selectedPrimGeneRarities, setSelectedPrimGeneRarities] = useState([]);
+    // const [selectedSecGeneRarities, setSelectedSecGeneRarities] = useState([]);
+    // const [selectedTertGeneRarities, setSelectedTertGeneRarities] = useState([]);
     const [rangeAllColours, setRangeAllColours] = useState(true);
     const [primRangeMode, setPrimRangeMode] = useState('0');
     const [secRangeMode, setSecRangeMode] = useState('0');
@@ -20,14 +20,23 @@ export function SearchUrlGenerator(){
     const [secRangeSize, setSecRangeSize] = useState(0);
     const [tertRangeSize, setTertRangeSize] = useState(0);
 
+    const[dragonCalc, setDragonCalc] = useState({
+        breedRarity: 1,
+        breedPercent: 1,
+        primRarity: 1,
+        primPercent: 1,
+        secRarity: 1,
+        secPercent: 1,
+        tertRarity: 1,
+        tertPercent: 1
+    });
+
     const [primFirstColour, setPrimFirstColour] = useState(1);
     const [primSecondColour, setPrimSecondColour] = useState(1);
     const [secFirstColour, setSecFirstColour] = useState(1);
     const [secSecondColour, setSecSecondColour] = useState(1);
     const [tertFirstColour, setTertFirstColour] = useState(1);
     const [tertSecondColour, setTertSecondColour] = useState(1);
-
-    const maxColour = 177;
 
     const[dragonInfo, setDragonInfo] = useState({ 
         breed: 1,
@@ -38,28 +47,6 @@ export function SearchUrlGenerator(){
         tertGene: 0,
         tertColour: 1,
     });
-
-    function getColourRange(startcolour, rangeMode, rangeSize){
-        switch(rangeMode){
-            case '-1':
-                return [shiftColours(startcolour, rangeSize * -1), startcolour]
-            case '1':
-                return [startcolour, shiftColours(startcolour, rangeSize)]
-            default:
-                return [shiftColours(startcolour, rangeSize* -1), shiftColours(startcolour, rangeSize)];
-        }
-    }
-
-    function shiftColours(colour, value){
-        var result = colour + value;
-        if(result > maxColour){
-            result = result - maxColour;
-        }
-        if(result < 1){
-            result = result + maxColour;
-        }
-        return result;
-    }
 
     useEffect(() =>{
         let [newFirst, newSecond] = getColourRange(dragonInfo.primColour, primRangeMode, primRangeSize);
@@ -75,7 +62,7 @@ export function SearchUrlGenerator(){
             setTertFirstColour(newFirst);
             setTertSecondColour(newSecond);
         }
-    },[primRangeMode, primRangeSize]);
+    },[primRangeMode, primRangeSize, rangeAllColours, dragonInfo]);
 
     useEffect(() =>{
         if(!rangeAllColours){
@@ -83,7 +70,7 @@ export function SearchUrlGenerator(){
             setSecFirstColour(newFirst);
             setSecSecondColour(newSecond);
         }
-    }, [secRangeMode, secRangeSize])
+    }, [secRangeMode, secRangeSize, rangeAllColours, dragonInfo])
 
     useEffect(() =>{
         if(!rangeAllColours){
@@ -91,7 +78,7 @@ export function SearchUrlGenerator(){
             setTertFirstColour(newFirst);
             setTertSecondColour(newSecond);
         }
-    }, [tertRangeMode, tertRangeSize])
+    }, [tertRangeMode, tertRangeSize, rangeAllColours, dragonInfo])
 
     return (
         <div>
@@ -101,7 +88,7 @@ export function SearchUrlGenerator(){
             </div>
 
             <br/>
-            <ScryInfo dragonInfo={dragonInfo} setDragonInfo={setDragonInfo} dragonCalc={null} showRarityInfo={false}/>
+            <ScryInfo dragonInfo={dragonInfo} setDragonInfo={setDragonInfo} dragonCalc={dragonCalc} showRarityInfo={false}/>
             <br/>
             <br/>
 
@@ -136,4 +123,26 @@ export function SearchUrlGenerator(){
     );
 }
 
-//Url generator
+function getColourRange(startcolour, rangeMode, rangeSize){
+    startcolour = parseInt(startcolour);
+    switch(rangeMode){
+        case '-1':
+            return [shiftColours(startcolour, rangeSize * -1), startcolour]
+        case '1':
+            return [startcolour, shiftColours(startcolour, rangeSize)]
+        default:
+            return [shiftColours(startcolour, rangeSize * -1), shiftColours(startcolour, rangeSize)];
+    }
+}
+
+function shiftColours(colour, value){
+    const maxColour = 177;
+    var result = colour + value;
+    if(result > maxColour){
+        result = result - maxColour;
+    }
+    if(result < 1){
+        result = result + maxColour;
+    }
+    return result;
+}

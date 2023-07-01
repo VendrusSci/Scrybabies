@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { colours } from "../Data/Data";
 
 export function SearchUrls(props){
 
@@ -11,14 +12,14 @@ export function SearchUrls(props){
     useEffect(()=>{
 
         setAhUrl(   ahBuyUrl
-                    + `d_body_range=${props.primFirstColour}-${props.primSecondColour}`
-                    + `&d_wings_range=${props.secFirstColour}-${props.secSecondColour}`
-                    + `&d_tert_range=${props.tertFirstColour}-${props.tertSecondColour}&collapse=1`);
+                    + `d_body_range=${colours[props.primFirstColour].id}-${colours[props.primSecondColour].id}`
+                    + `&d_wings_range=${colours[props.secFirstColour].id}-${colours[props.secSecondColour].id}`
+                    + `&d_tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}&collapse=1`);
 
         setSearchUrl(   searchBuyUrlStart
-                        + `body_range=${props.primFirstColour}-${props.primSecondColour}`
-                        + `&wings_range=${props.secFirstColour}-${props.secSecondColour}`
-                        + `&tert_range=${props.tertFirstColour}-${props.tertSecondColour}`
+                        + `body_range=${colours[props.primFirstColour].id}-${colours[props.primSecondColour].id}`
+                        + `&wings_range=${colours[props.secFirstColour].id}-${colours[props.secSecondColour].id}`
+                        + `&tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
                         + searchBuyUrlEnd);
     },[props]);
 
@@ -33,14 +34,12 @@ export function SearchUrls(props){
     return (
         <div className="SearchUrl-searchArea">
             <div className="SearchUrl-rangeConfigArea">
-                <label className="SearchUrl-label">AH:      </label>
+                <label className="SearchUrl-label">AH Search:      </label>
                 <button onClick={openAhUrl}>Open in new tab</button>
-                <button>View URL</button>
             </div>
             <div className="SearchUrl-rangeConfigArea">
-                <label className="SearchUrl-label">Search:</label>
+                <label className="SearchUrl-label">Dragon Search:</label>
                 <button onClick={openSearchUrl}>Open in new tab</button>
-                <button>View URL</button>
             </div>
         </div>
     );

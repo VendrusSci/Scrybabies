@@ -3,6 +3,8 @@ import { ColourDropdown } from "../Utils/DragonDropdowns"
 
 export function RangeViewer(props){
 
+    console.log(props);
+
     return (
         <div>
             <div className='SearchUrl-labelinput'>
