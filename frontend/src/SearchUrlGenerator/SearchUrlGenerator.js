@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { ScryInfo } from '../Utils/ScryInfo';
-import { ColourDropdown } from '../Utils/DragonDropdowns';
-import { colours } from '../Data/Data';
-import NumericInput from 'react-numeric-input';
+import { RangeViewer } from './RangeViewer';
+import { RangeConfig } from './RangeConfig';
+
 import '../CSS/ScryInfo.css';
+import '../CSS/SearchUrl.css';
 
 export function SearchUrlGenerator(){
 
-    const [rangeSize, setRangeSize] = useState(0);
-    const [rangeOffset, setRangeOffset] = useState(0);
     const [selectedPrimGeneRarities, setSelectedPrimGeneRarities] = useState([]);
     const [selectedSecGeneRarities, setSelectedSecGeneRarities] = useState([]);
     const [selectedTertGeneRarities, setSelectedTertGeneRarities] = useState([]);
     const [rangeAllColours, setRangeAllColours] = useState(true);
-    const [primaryRange, setPrimaryRange] = useState(0);
-    const [secondaryRange, setSecondaryRange] = useState(0);
-    const [tertiaryRange, setTertiaryRange] = useState(0);
+    const [primRangeMode, setPrimRangeMode] = useState('0');
+    const [secRangeMode, setSecRangeMode] = useState('0');
+    const [tertRangeMode, setTertRangeMode] = useState('0');
+    const [primRangeSize, setPrimRangeSize] = useState(0);
+    const [secRangeSize, setSecRangeSize] = useState(0);
+    const [tertRangeSize, setTertRangeSize] = useState(0);
+
+    const [primFirstColour, setPrimFirstColour] = useState(1);
+    const [primSecondColour, setPrimSecondColour] = useState(1);
+    const [secFirstColour, setSecFirstColour] = useState(1);
+    const [secSecondColour, setSecSecondColour] = useState(1);
+    const [tertFirstColour, setTertFirstColour] = useState(1);
+    const [tertSecondColour, setTertSecondColour] = useState(1);
+
+    const maxColour = 177;
 
     const[dragonInfo, setDragonInfo] = useState({ 
         breed: 1,
@@ -27,44 +38,59 @@ export function SearchUrlGenerator(){
         tertColour: 1,
     });
 
-    const[searchOptions, setSearchOptions] = useState({ 
-        primFirstColour: 1,
-        primSecondColour: 1,
-        secFirstColour: 1,
-        secSecondColour: 1,
-        tertFirstColour: 1,
-        tertSecondColour: 1
-    });
-
-    function updateRangeConfig(e){
-        setRangeAllColours(e.target.checked);
-    }
-
-    function updateRangeSize(value){
-        const re = /^[0-9\b]+$/;
-        if (re.test(value)) {
-            setRangeSize(value)
-        }
-        if(value === ""){
-            setRangeSize('');
-        } 
-    }
-
-    function updateOptions(option, value){
-        let options = searchOptions;
-        switch(option){
-            case "primFirstColour":
-                options.primFirstColour = value;
-                setSearchOptions(options);
-                break;
+    function getColourRange(startcolour, rangeMode, rangeSize){
+        switch(rangeMode){
+            case '-1':
+                return [shiftColours(startcolour, rangeSize * -1), startcolour]
+            case '1':
+                return [startcolour, shiftColours(startcolour, rangeSize)]
             default:
-                return;
+                return [shiftColours(startcolour, rangeSize* -1), shiftColours(startcolour, rangeSize)];
         }
+    }
+
+    function shiftColours(colour, value){
+        var result = colour + value;
+        if(result > maxColour){
+            result = result - maxColour;
+        }
+        if(result < 1){
+            result = result + maxColour;
+        }
+        return result;
     }
 
     useEffect(() =>{
+        let [newFirst, newSecond] = getColourRange(dragonInfo.primColour, primRangeMode, primRangeSize);
+        setPrimFirstColour(newFirst);
+        setPrimSecondColour(newSecond);
 
-    });
+        if(rangeAllColours){
+            [newFirst, newSecond] = getColourRange(dragonInfo.secColour, primRangeMode, primRangeSize);
+            setSecFirstColour(newFirst);
+            setSecSecondColour(newSecond);
+
+            [newFirst, newSecond] = getColourRange(dragonInfo.tertColour, primRangeMode, primRangeSize);
+            setTertFirstColour(newFirst);
+            setTertSecondColour(newSecond);
+        }
+    },[primRangeMode, primRangeSize]);
+
+    useEffect(() =>{
+        if(!rangeAllColours){
+            let [newFirst, newSecond] = getColourRange(dragonInfo.secColour, secRangeMode, secRangeSize);
+            setSecFirstColour(newFirst);
+            setSecSecondColour(newSecond);
+        }
+    }, [secRangeMode, secRangeSize])
+
+    useEffect(() =>{
+        if(!rangeAllColours){
+            let [newFirst, newSecond] = getColourRange(dragonInfo.tertColour, tertRangeMode, tertRangeSize);
+            setTertFirstColour(newFirst);
+            setTertSecondColour(newSecond);
+        }
+    }, [tertRangeMode, tertRangeSize])
 
     return (
         <div>
@@ -72,51 +98,36 @@ export function SearchUrlGenerator(){
                 <h2>PROJECT: SEARCH</h2>
                 Hunt down that (nearly) perfect dragon.
             </div>
+
             <br/>
             <ScryInfo dragonInfo={dragonInfo} setDragonInfo={setDragonInfo} dragonCalc={null} showRarityInfo={false}/>
-            
+            <br/>
             <br/>
 
             <div className="Scry-body">
-                <label className='Scry-label'><b>Auto-generate ranges</b></label>
-                <div className='Scry-gene'>
-                    <label className='Scry-label'>Range size</label>
-                    <NumericInput max={10} min={0} step={1} value={rangeSize} onChange={setRangeSize}/>
-                </div>
+                <label className='SearchUrl-heading'><b>Auto-generate ranges</b></label>
+
                 <div className='Scry-gene'>
                     <label className='Scry-label'>Apply to all colours</label>
-                    <input type='checkbox' checked={rangeAllColours} onChange={updateRangeConfig}/>
+                    <input type='checkbox' checked={rangeAllColours} onChange={(e) => setRangeAllColours(e.target.checked)}/>
                 </div>
-                <div className={rangeAllColours ? 'Scry-configpart' : 'Scry-gene'}>
-                    <select value={primaryRange} onChange={(e)=>{setPrimaryRange(e.target.value)}}>
-                        <option value={-1}>Before colour</option>
-                        <option value={0}>Both sides</option>
-                        <option value={1}>After colour</option>
-                    </select>
+                <div className='SearchUrl-rangeConfigArea'>
+                    <RangeConfig rangeSize={primRangeSize} setRangeSize={setPrimRangeSize} rangeOffset={primRangeMode} setRangeOffset={setPrimRangeMode} />
                     {!rangeAllColours ?
                         <>
-                            <select  value={secondaryRange} onChange={(e)=>{setSecondaryRange(e.target.value)}}>
-                                <option value={-1}>Before colour</option>
-                                <option value={0}>Both sides</option>
-                                <option value={1}>After colour</option>
-                            </select>
-                            <select value={tertiaryRange} onChange={(e)=>{setTertiaryRange(e.target.value)}}>
-                                <option value={-1}>Before colour</option>
-                                <option value={0}>Split around colour</option>
-                                <option value={1}>After colour</option>
-                            </select>
+                            <RangeConfig rangeSize={secRangeSize} setRangeSize={setSecRangeSize} rangeOffset={secRangeMode} setRangeOffset={setSecRangeMode}/>
+                            <RangeConfig rangeSize={tertRangeSize} setRangeSize={setTertRangeSize} rangeOffset={tertRangeMode} setRangeOffset={setTertRangeMode}/>
                         </> : null
                     }
                 </div>
-                <div className='Scry-gene'>
-                    <label className='Scry-label'>First colour</label>
-                    <ColourDropdown colour={searchOptions.primFirstColour} setColour={(e => {updateOptions("primFirstColour", e.target.value)})} colours={colours}/>
+                <div className='SearchUrl-rangeConfigArea'>
+                    <RangeViewer firstColour={primFirstColour} secondColour={primSecondColour} setFirst={setPrimFirstColour} setSecond={setPrimSecondColour}/>
+                    <RangeViewer firstColour={secFirstColour} secondColour={secSecondColour} setFirst={setSecFirstColour} setSecond={setSecSecondColour}/>
+                    <RangeViewer firstColour={tertFirstColour} secondColour={tertSecondColour} setFirst={setTertFirstColour} setSecond={setTertSecondColour}/>
                 </div>
             </div>
         </div>
     );
 }
 
-//Range options
-//Tweaking options
 //Url generator
