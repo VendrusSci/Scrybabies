@@ -26,6 +26,13 @@
     padding-left: 10px;
 }
 
+.SearchUrl-toggleLabel {
+    white-space: pre;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
 .SearchUrl-heading{
     padding-bottom: 20px;
 }
@@ -51,4 +58,23 @@
 
 .SearchUrl-numberInputInput{
     max-width: 50px;
+}
+
+.SearchUrl-rarityCollection{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+}
+
+.SearchUrl-rarityArea{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.SearchUrl-labelcheckbox{
+    display:flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: stretch;
+    padding-bottom: 5px;
 }

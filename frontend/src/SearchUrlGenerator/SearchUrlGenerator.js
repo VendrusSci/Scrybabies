@@ -6,12 +6,10 @@ import { RangeConfig } from './RangeConfig';
 import '../CSS/ScryInfo.css';
 import '../CSS/SearchUrl.css';
 import { SearchUrls } from './SearchUrls';
+import { SearchExtras } from './SearchExtras';
 
 export function SearchUrlGenerator(){
 
-    // const [selectedPrimGeneRarities, setSelectedPrimGeneRarities] = useState([]);
-    // const [selectedSecGeneRarities, setSelectedSecGeneRarities] = useState([]);
-    // const [selectedTertGeneRarities, setSelectedTertGeneRarities] = useState([]);
     const [rangeAllColours, setRangeAllColours] = useState(true);
     const [primRangeMode, setPrimRangeMode] = useState('0');
     const [secRangeMode, setSecRangeMode] = useState('0');
@@ -20,23 +18,25 @@ export function SearchUrlGenerator(){
     const [secRangeSize, setSecRangeSize] = useState(0);
     const [tertRangeSize, setTertRangeSize] = useState(0);
 
-    const[dragonCalc, setDragonCalc] = useState({
-        breedRarity: 1,
-        breedPercent: 1,
-        primRarity: 1,
-        primPercent: 1,
-        secRarity: 1,
-        secPercent: 1,
-        tertRarity: 1,
-        tertPercent: 1
-    });
-
     const [primFirstColour, setPrimFirstColour] = useState(1);
     const [primSecondColour, setPrimSecondColour] = useState(1);
     const [secFirstColour, setSecFirstColour] = useState(1);
     const [secSecondColour, setSecSecondColour] = useState(1);
     const [tertFirstColour, setTertFirstColour] = useState(1);
     const [tertSecondColour, setTertSecondColour] = useState(1);
+
+    const [primaryOptions, setPrimaryOptions] = useState(new Array(5).fill(false));
+    const [secondaryOptions, setSecondaryOptions] = useState(new Array(5).fill(false));
+    const [tertiaryOptions, setTertiaryOptions] = useState(new Array(5).fill(false));
+    const [breedOptions, setBreedOptions] = useState(new Array(5).fill(false));
+
+    const[showGeneOptions, setShowGeneOptions] = useState(false);
+    const[showBreedOptions, setShowBreedOptions] = useState(false);
+
+    const [gender, setGender] = useState(-1);
+    const [rtbStatus, setRtbStatus] = useState(-1);
+
+    let dragonCalc = {};
 
     const[dragonInfo, setDragonInfo] = useState({ 
         breed: 1,
@@ -114,10 +114,16 @@ export function SearchUrlGenerator(){
                     <RangeViewer firstColour={tertFirstColour} secondColour={tertSecondColour} setFirst={setTertFirstColour} setSecond={setTertSecondColour}/>
                 </div>
                 <br/>
+                <SearchExtras gender={gender} setGender={setGender} rtbStatus={rtbStatus} setRtbStatus={setRtbStatus}
+                                breedOptions={breedOptions} setBreedOptions={setBreedOptions} primaryOptions={primaryOptions} setPrimaryOptions={setPrimaryOptions}
+                                secondaryOptions={secondaryOptions} setSecondaryOptions={setSecondaryOptions} tertiaryOptions={tertiaryOptions} setTertiaryOptions={setTertiaryOptions}
+                                showBreedOptions={showBreedOptions} setShowBreedOptions={setShowBreedOptions} showGeneOptions={showGeneOptions} setShowGeneOptions={setShowGeneOptions}/>
                 <br/>
-                <SearchUrls primFirstColour={primFirstColour} primSecondColour={primSecondColour}
-                            secFirstColour={secFirstColour} secSecondColour={secSecondColour}
-                            tertFirstColour={tertFirstColour} tertSecondColour={tertSecondColour}/>
+                <br/>
+                <SearchUrls primFirstColour={primFirstColour} primSecondColour={primSecondColour} secFirstColour={secFirstColour} secSecondColour={secSecondColour} 
+                            tertFirstColour={tertFirstColour} tertSecondColour={tertSecondColour} breedOptions={breedOptions} showBreedOptions={showBreedOptions}
+                            primaryOptions={primaryOptions} secondaryOptions={secondaryOptions} tertiaryOptions={tertiaryOptions} showGeneOptions={showGeneOptions}
+                            gender={gender} rtbStatus={rtbStatus}/>
             </div>
         </div>
     );
