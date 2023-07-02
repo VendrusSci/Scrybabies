@@ -1,25 +1,23 @@
 import ToggleSwitch from '../Utils/ToggleSwitch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons'
 
 export function SearchExtras(props){
 
     function setPrimaryOptions(option, value){
-        let options = props.primaryOptions;
-        options[option] = value;
+        let options = props.primaryOptions.map((o, idx) => idx === option ? value : o);
         props.setPrimaryOptions(options);
     }
     function setSecondaryOptions(option, value){
-        let options = props.primaryOptions;
-        options[option] = value;
+        let options = props.secondaryOptions.map((o, idx) => idx === option ? value : o);
         props.setSecondaryOptions(options);
     }
     function setTertiaryOptions(option, value){
-        let options = props.primaryOptions;
-        options[option] = value;
+        let options = props.tertiaryOptions.map((o, idx) => idx === option ? value : o);
         props.setTertiaryOptions(options);
     }
     function setBreedOptions(option, value){
-        let options = props.primaryOptions;
-        options[option] = value;
+        let options = props.breedOptions.map((o, idx) => idx === option ? value : o);
         props.setBreedOptions(options);
     }
 
@@ -46,12 +44,14 @@ export function SearchExtras(props){
             <div className="SearchUrl-labelinput">
                 <label className="SearchUrl-label">Show breed rarity options:</label>
                 <ToggleSwitch isToggled={props.showBreedOptions} setIsToggled={props.setShowBreedOptions}/>
+                <FontAwesomeIcon data-tooltip-id="breed" data-tooltip-html="This currently only covers modern breeds" 
+                    icon={faCircleQuestion}/>
             </div>
             {props.showBreedOptions ?
                 <div>
                     <div className='SearchUrl-rarityCollection'>
                         <div className="SearchUrl-labelcheckbox">
-                            <input type="checkbox" checked={props.breedOptions[0]} onChange={(e) => setBreedOptions(0, e.target.checked)}/>
+                            <input type="checkbox" checked={props.breedOptions[0]} onClick={(e) => setBreedOptions(0, e.target.checked)}/>
                             <label className="SearchUrl-label">Plentiful</label>
                         </div>
                         <div className="SearchUrl-labelcheckbox">
@@ -78,6 +78,8 @@ export function SearchExtras(props){
             <div className="SearchUrl-labelinput">
                 <label className="SearchUrl-label">Show gene rarity options:</label>
                 <ToggleSwitch isToggled={props.showGeneOptions} setIsToggled={props.setShowGeneOptions}/>
+                <FontAwesomeIcon data-tooltip-id="gene" data-tooltip-html="This currently only covers modern genes" 
+                    icon={faCircleQuestion}/>
             </div>
             
             {props.showGeneOptions ?
