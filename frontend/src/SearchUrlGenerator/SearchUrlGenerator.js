@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ScryInfo } from '../Utils/ScryInfo';
+import { ScryWorkshop } from '../Utils/ScryWorkshop';
 import { RangeViewer } from './RangeViewer';
 import { RangeConfig } from './RangeConfig';
+import ToggleSwitch from '../Utils/ToggleSwitch.js';
 
 import '../CSS/ScryInfo.css';
 import '../CSS/SearchUrl.css';
@@ -35,6 +37,9 @@ export function SearchUrlGenerator(){
 
     const [gender, setGender] = useState(-1);
     const [rtbStatus, setRtbStatus] = useState(-1);
+    const [isSameBreed, setIsSameBreed] = useState(false);
+
+    const [workshopMode, setWorkshopMode] = useState(false);
 
     let dragonCalc = {};
 
@@ -87,14 +92,20 @@ export function SearchUrlGenerator(){
                 Hunt down that (nearly) perfect dragon.
             </div>
 
-            <br/>
-            <ScryInfo dragonInfo={dragonInfo} setDragonInfo={setDragonInfo} dragonCalc={dragonCalc} showRarityInfo={false}/>
-            <br/>
-            <br/>
-
             <div className="Scry-body">
-                <label className='SearchUrl-heading'><b>Auto-generate ranges</b></label>
+                <label className='SearchUrl-heading'><b>Enter desired dragon</b></label>
 
+                { workshopMode ? <ScryWorkshop dragonInfo={dragonInfo} setDragonInfo={setDragonInfo} dragonCalc={dragonCalc} showRarityInfo={false}/> 
+                                    : <ScryInfo dragonInfo={dragonInfo} setDragonInfo={setDragonInfo} dragonCalc={dragonCalc} showRarityInfo={false}/>}
+                
+                <div className="Scry-layout Scry-togglearea">
+                    <label className='Scry-label'>Scry URL mode  </label>
+                    <ToggleSwitch isToggled={workshopMode} setIsToggled={setWorkshopMode}/>
+                    <label className='Scry-label'>  Workshop mode </label>
+                </div>
+
+
+                <label className='SearchUrl-heading'><b>Generate ranges</b></label>
                 <div className='SearchUrl-labelInput'>
                     <label className='Scry-label'>Apply to all colours</label>
                     <input type='checkbox' checked={rangeAllColours} onChange={(e) => setRangeAllColours(e.target.checked)}/>
@@ -115,15 +126,17 @@ export function SearchUrlGenerator(){
                 </div>
                 <br/>
                 <SearchExtras gender={gender} setGender={setGender} rtbStatus={rtbStatus} setRtbStatus={setRtbStatus}
+                                isSameBreed={isSameBreed} setIsSameBreed={setIsSameBreed} breed={dragonInfo.breed}
                                 breedOptions={breedOptions} setBreedOptions={setBreedOptions} primaryOptions={primaryOptions} setPrimaryOptions={setPrimaryOptions}
                                 secondaryOptions={secondaryOptions} setSecondaryOptions={setSecondaryOptions} tertiaryOptions={tertiaryOptions} setTertiaryOptions={setTertiaryOptions}
                                 showBreedOptions={showBreedOptions} setShowBreedOptions={setShowBreedOptions} showGeneOptions={showGeneOptions} setShowGeneOptions={setShowGeneOptions}/>
-                <br/>
-                <br/>
+                
+                <label className='SearchUrl-heading'><b>Open FR Searches</b></label>
+
                 <SearchUrls primFirstColour={primFirstColour} primSecondColour={primSecondColour} secFirstColour={secFirstColour} secSecondColour={secSecondColour} 
                             tertFirstColour={tertFirstColour} tertSecondColour={tertSecondColour} breedOptions={breedOptions} showBreedOptions={showBreedOptions}
                             primaryOptions={primaryOptions} secondaryOptions={secondaryOptions} tertiaryOptions={tertiaryOptions} showGeneOptions={showGeneOptions}
-                            gender={gender} rtbStatus={rtbStatus}/>
+                            gender={gender} rtbStatus={rtbStatus} breed={dragonInfo.breed} isSameBreed={isSameBreed}/>
             </div>
         </div>
     );

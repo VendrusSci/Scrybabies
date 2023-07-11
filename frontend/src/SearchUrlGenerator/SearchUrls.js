@@ -16,10 +16,13 @@ export function SearchUrls(props){
         let secondaryGenes = [];
         let tertiaryGenes = [];
 
-        if(props.showBreedOptions && !props.breedOptions.every(v => v === false)){
+        if(props.isSameBreed){
+            breeds = [props.breed];
+        }
+        else if(props.showBreedOptions && !props.breedOptions.every(v => v === false)){
             for(let i = 0; i < 5; i++){
                 if(props.breedOptions[i]){
-                    breeds = breeds.concat(getBreedArray(i));
+                    breeds = breeds.concat(getBreedArray(i), props.isModernsOnly);
                 }
             }
         }
@@ -27,7 +30,7 @@ export function SearchUrls(props){
         if(props.showGeneOptions && !props.primaryOptions.every(v => v === false)){
             for(let i = 0; i < 5; i++){
                 if(props.primaryOptions[i]){
-                    primaryGenes = primaryGenes.concat(getGeneArray(i, 1));
+                    primaryGenes = primaryGenes.concat(getGeneArray(i, 1, props.isSameBreed, props.breed));
                 }
             }
         }
@@ -35,7 +38,7 @@ export function SearchUrls(props){
         if(props.showGeneOptions && !props.secondaryOptions.every(v => v === false)){
             for(let i = 0; i < 5; i++){
                 if(props.secondaryOptions[i]){
-                    secondaryGenes = secondaryGenes.concat(getGeneArray(i, 2));
+                    secondaryGenes = secondaryGenes.concat(getGeneArray(i, 2, props.isSameBreed, props.breed));
                 }
             }
         }
@@ -43,7 +46,7 @@ export function SearchUrls(props){
         if(props.showGeneOptions && !props.tertiaryOptions.every(v => v === false)){
             for(let i = 0; i < 5; i++){
                 if(props.tertiaryOptions[i]){
-                    tertiaryGenes = tertiaryGenes.concat(getGeneArray(i, 3));
+                    tertiaryGenes = tertiaryGenes.concat(getGeneArray(i, 3, props.isSameBreed, props.breed));
                 }
             }
         }
@@ -54,7 +57,7 @@ export function SearchUrls(props){
                     + `&d_tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
                     + `&d_gender=${props.gender === -1 ? '' : props.gender}`
                     + `&d_rtb=${props.rtbStatus === -1 ? '' : 1}`
-                    + `&d_breed=${props.showBreedOptions ? breeds.join('%2C') : ''}`
+                    + `&d_breed=${breeds !== [] ? breeds.join('%2C') : ''}`
                     + `&d_bodygene=${props.showGeneOptions ? primaryGenes.join('%2C') : ''}`
                     + `&d_winggene=${props.showGeneOptions ? secondaryGenes.join('%2C') : ''}`
                     + `&d_tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`);
@@ -65,7 +68,7 @@ export function SearchUrls(props){
                         + `&tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
                         + `&gender=${props.gender === -1 ? '' : props.gender}`
                         + `&rtb=${props.rtbStatus === -1 ? '' : 1}`
-                        + `&breed=${props.showBreedOptions ? breeds.join('%2C') : ''}`
+                        + `&breed=${breeds !== [] ? breeds.join('%2C') : ''}`
                         + `&bodygene=${props.showGeneOptions ? primaryGenes.join('%2C') : ''}`
                         + `&winggene=${props.showGeneOptions ? secondaryGenes.join('%2C') : ''}`
                         + `&tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`
@@ -95,11 +98,11 @@ export function SearchUrls(props){
 }
 
 function getBreedArray(rarity){
-    let selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.rarity === rarity && value.isAncient === false);
+    let selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.rarity === rarity);
     return selectedBreeds.map(([key, _]) => key);
 }
 
-function getGeneArray(rarity, geneSlot){
+function getGeneArray(rarity, geneSlot, isSameBreed, breed){
     let genes ={};
     if(geneSlot === 1)
         genes = primaryGenes;
@@ -108,6 +111,14 @@ function getGeneArray(rarity, geneSlot){
     else
         genes = tertiaryGenes;
 
-    let selectedGenes = Object.entries(genes).filter(([_, value]) => value.rarity === rarity && value.breed === 0);
+    let selectedGenes = [];
+    if(!isSameBreed || (isSameBreed && breeds[breed].isAncient === false)){
+        selectedGenes = Object.entries(genes).filter(([_, value]) => value.rarity === rarity && value.breed === 0);
+    }
+    else{
+        selectedGenes = Object.entries(genes).filter(([_, value]) => value.rarity === rarity && value.breed === parseInt(breed));
+    }
+        
+    
     return selectedGenes.map(([key, _]) => key);
 }

@@ -21,7 +21,7 @@ export function Navbar(){
                         <a href="/">Generate Offspring</a>
                     </li>
                     <li>
-                        <a href="/search">Project: Search</a>
+                        <Link to="/search">Project: Search</Link>
                     </li>
                     <li>
                         <Link to="/about">About</Link>

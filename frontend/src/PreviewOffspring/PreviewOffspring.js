@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { ScryConfig } from "./ScryConfig";
 import { ScryInfo } from "../Utils/ScryInfo";
-import { ScryWorkshop } from "./ScryWorkshop";
+import { ScryWorkshop } from "../Utils/ScryWorkshop";
 import ToggleSwitch from '../Utils/ToggleSwitch';
 import {breeds, rarities, primaryGenes, secondaryGenes, tertiaryGenes, rarityTable} from "../Data/Data.js";
 import { generateLink } from './LinkGenerator';
