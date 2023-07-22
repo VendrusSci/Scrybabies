@@ -4,7 +4,7 @@ import { Navbar } from './Utils/Navbar.js'
 import { About } from './About.js';
 import './CSS/App.css';
 import './CSS/Navbar.css';
-import { PreviewOffsping } from './PreviewOffspring/PreviewOffspring.js';
+import { PreviewOffspring } from './PreviewOffspring/PreviewOffspring.js';
 import { SearchUrlGenerator} from './SearchUrlGenerator/SearchUrlGenerator.js'
 
 
@@ -19,10 +19,10 @@ function App() {
         </header>
         <Routes>
           <Route path="/" element={
-            <PreviewOffsping />}>
+            <PreviewOffspring />}>
           </Route>
           <Route path="/preview" element={
-            <PreviewOffsping />}>
+            <PreviewOffspring />}>
           </Route>
           <Route path="/search" element={
             <SearchUrlGenerator />}>

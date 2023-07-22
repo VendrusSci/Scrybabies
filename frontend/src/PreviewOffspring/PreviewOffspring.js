@@ -7,7 +7,7 @@ import ToggleSwitch from '../Utils/ToggleSwitch';
 import {breeds, rarities, primaryGenes, secondaryGenes, tertiaryGenes, rarityTable} from "../Data/Data.js";
 import { generateLink } from './LinkGenerator';
 
-export function PreviewOffsping(){
+export function PreviewOffspring(){
 
     const[dragon1Info, setDragon1Info] = useState({ 
         breed: 1,

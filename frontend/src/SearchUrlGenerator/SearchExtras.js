@@ -74,6 +74,10 @@ export function SearchExtras(props){
                             <input type="checkbox" disabled={props.isSameBreed ? "disabled" : ""} checked={props.breedOptions[4]} onChange={(e) => setBreedOptions(4, e.target.checked)}/>
                             <label className="SearchUrl-label">Rare</label>
                         </div>
+                        <div className="SearchUrl-labelcheckbox">
+                            <input type="checkbox" disabled={props.isSameBreed ? "disabled" : ""} checked={props.breedOptions[5]} onChange={(e) => setBreedOptions(5, e.target.checked)}/>
+                            <label className="SearchUrl-label">Ancient</label>
+                        </div>
                     </div>
                 </div>
             : null

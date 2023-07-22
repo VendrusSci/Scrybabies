@@ -20,9 +20,9 @@ export function SearchUrls(props){
             breeds = [props.breed];
         }
         else if(props.showBreedOptions && !props.breedOptions.every(v => v === false)){
-            for(let i = 0; i < 5; i++){
+            for(let i = 0; i < 6; i++){
                 if(props.breedOptions[i]){
-                    breeds = breeds.concat(getBreedArray(i), props.isModernsOnly);
+                    breeds = breeds.concat(getBreedArray(i));
                 }
             }
         }
@@ -98,7 +98,11 @@ export function SearchUrls(props){
 }
 
 function getBreedArray(rarity){
-    let selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.rarity === rarity);
+    let selectedBreeds = [];
+    if(rarity !== 5)
+        selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.rarity === rarity && value.breed === 0);
+    else 
+        selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.isAncient === true);
     return selectedBreeds.map(([key, _]) => key);
 }
 

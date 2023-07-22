@@ -30,7 +30,7 @@ export function SearchUrlGenerator(){
     const [primaryOptions, setPrimaryOptions] = useState(new Array(5).fill(false));
     const [secondaryOptions, setSecondaryOptions] = useState(new Array(5).fill(false));
     const [tertiaryOptions, setTertiaryOptions] = useState(new Array(5).fill(false));
-    const [breedOptions, setBreedOptions] = useState(new Array(5).fill(false));
+    const [breedOptions, setBreedOptions] = useState(new Array(6).fill(false));
 
     const[showGeneOptions, setShowGeneOptions] = useState(false);
     const[showBreedOptions, setShowBreedOptions] = useState(false);
