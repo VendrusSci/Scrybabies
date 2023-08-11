@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { menuItems } from './MenuItems';
+import { MenuItem } from './MenuItem';
+import '../CSS/Navbar.css'
 
 export function Navbar(){
 
@@ -10,32 +12,20 @@ export function Navbar(){
     return(
         <nav className="navigation">
             <span className="brand-name">
-                SCRYBABIES
+                reSKIN
             </span>
             <button className="hamburger" onClick={() => setIsNavbarExpanded(!isNavbarExpanded)}>
             <FontAwesomeIcon icon={faBars} size='xl'/>
             </button>
             <div className={isNavbarExpanded ? "navigation-menu expanded" : "navigation-menu"}>
-                <ul>
-                    <li>
-                        <a href="/">Generate Offspring</a>
-                    </li>
-                    <li>
-                        <Link to="/search">Project: Search</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                        <a href="https://github.com/VendrusSci/Scrybabies">Source Code</a>
-                    </li>
-                    <li>
-                        <a href="https://www1.flightrising.com/forums/gde/3235246">Guide</a>
-                    </li>
-                    <li>
-                        <a href="https://reskin.vendrus.teamfrag.net">reSKIN</a>
-                    </li>
-                </ul>
+                <nav>
+                    <ul>
+                        {menuItems.map((menu, index) => {
+                            const depthLevel = 0;
+                            return <MenuItem items={menu} key={index} depthLevel={depthLevel} setIsNavbarExpanded={setIsNavbarExpanded}/>;
+                        })}
+                    </ul>
+                </nav>
             </div>
         </nav>
     );
