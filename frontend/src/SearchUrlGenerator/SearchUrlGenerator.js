@@ -9,6 +9,7 @@ import '../CSS/ScryInfo.css';
 import '../CSS/SearchUrl.css';
 import { SearchUrls } from './SearchUrls';
 import { SearchExtras } from './SearchExtras';
+import { SearchSpecial } from './SearchSpecial';
 
 export function SearchUrlGenerator(){
 
@@ -39,7 +40,14 @@ export function SearchUrlGenerator(){
     const [rtbStatus, setRtbStatus] = useState(-1);
     const [isSameBreed, setIsSameBreed] = useState(false);
 
+    const [isG1, setIsG1] = useState(false);
+    const [eyeTypes, setEyeTypes] = useState(new Array(20).fill(false));
+    const [digits, setDigits] = useState(new Array(7).fill(false));
+    const [elements, setElements] = useState(new Array(11).fill(false));
+    const [patterns, setPatterns] = useState(new Array(5).fill(false));
+
     const [workshopMode, setWorkshopMode] = useState(false);
+    const [showSpecial, setShowSpecial] = useState(false);
 
     let dragonCalc = {};
 
@@ -104,7 +112,6 @@ export function SearchUrlGenerator(){
                     <label className='Scry-label'>  Workshop mode </label>
                 </div>
 
-
                 <label className='SearchUrl-heading'><b>Generate ranges</b></label>
                 <div className='SearchUrl-labelInput'>
                     <label className='Scry-label'>Apply to all colours</label>
@@ -131,12 +138,23 @@ export function SearchUrlGenerator(){
                                 secondaryOptions={secondaryOptions} setSecondaryOptions={setSecondaryOptions} tertiaryOptions={tertiaryOptions} setTertiaryOptions={setTertiaryOptions}
                                 showBreedOptions={showBreedOptions} setShowBreedOptions={setShowBreedOptions} showGeneOptions={showGeneOptions} setShowGeneOptions={setShowGeneOptions}/>
                 
+                <div className="Scry-layout Scry-togglearea">
+                    <label className='Scry-label'>Show extra filters  </label>
+                    <ToggleSwitch isToggled={showSpecial} setIsToggled={setShowSpecial}/>
+                </div>
+                {showSpecial ? 
+                    <SearchSpecial isG1={isG1} setIsG1={setIsG1} eyeTypes={eyeTypes} setEyeTypes={setEyeTypes} patterns={patterns} setPatterns={setPatterns}
+                                    elements={elements} setElements={setElements} digits={digits} setDigits={setDigits}/> 
+                    : ""
+                }
+                
                 <label className='SearchUrl-heading'><b>Open FR Searches</b></label>
 
                 <SearchUrls primFirstColour={primFirstColour} primSecondColour={primSecondColour} secFirstColour={secFirstColour} secSecondColour={secSecondColour} 
                             tertFirstColour={tertFirstColour} tertSecondColour={tertSecondColour} breedOptions={breedOptions} showBreedOptions={showBreedOptions}
                             primaryOptions={primaryOptions} secondaryOptions={secondaryOptions} tertiaryOptions={tertiaryOptions} showGeneOptions={showGeneOptions}
-                            gender={gender} rtbStatus={rtbStatus} breed={dragonInfo.breed} isSameBreed={isSameBreed}/>
+                            gender={gender} rtbStatus={rtbStatus} breed={dragonInfo.breed} isSameBreed={isSameBreed}
+                            isG1={isG1} eyeTypes={eyeTypes} digits={digits} elements={elements} patterns={patterns}/>
             </div>
         </div>
     );

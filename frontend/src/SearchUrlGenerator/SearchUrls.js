@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { breeds, colours, primaryGenes, secondaryGenes, tertiaryGenes } from "../Data/Data";
+import { breeds, colours, primaryGenes, secondaryGenes, tertiaryGenes, searchPatterns } from "../Data/Data";
 
 export function SearchUrls(props){
 
@@ -11,18 +11,54 @@ export function SearchUrls(props){
 
     useEffect(()=>{
 
-        let breeds = [];
+        let selectedBreeds = [];
         let primaryGenes = [];
         let secondaryGenes = [];
         let tertiaryGenes = [];
+        let eyeTypes = [];
+        let elements = [];
+        let digits = [];
+        let patterns = [];
 
         if(props.isSameBreed){
-            breeds = [props.breed];
+            selectedBreeds = [props.breed];
         }
         else if(props.showBreedOptions && !props.breedOptions.every(v => v === false)){
             for(let i = 0; i < 6; i++){
                 if(props.breedOptions[i]){
-                    breeds = breeds.concat(getBreedArray(i));
+                    selectedBreeds = selectedBreeds.concat(getBreedArray(i));
+                }
+            }
+        }
+
+        if(!props.patterns.every(v => v === false)){
+            for(let i = 0; i < props.patterns.length; i++){
+                if(props.patterns[i]){
+                    patterns = patterns.concat(searchPatterns[i]);
+                }
+            }
+        }
+
+        if(!props.eyeTypes.every(v => v === false)){
+            for(let i = 0; i < props.eyeTypes.length; i++){
+                if(props.eyeTypes[i]){
+                    eyeTypes = eyeTypes.concat(i);
+                }
+            }
+        }
+
+        if(!props.elements.every(v => v === false)){
+            for(let i = 0; i < props.elements.length; i++){
+                if(props.elements[i]){
+                    elements = elements.concat(i+1);
+                }
+            }
+        }
+
+        if(!props.digits.every(v => v === false)){
+            for(let i = 0; i < props.digits.length; i++){
+                if(props.digits[i]){
+                    digits = digits.concat(i+2);
                 }
             }
         }
@@ -57,10 +93,15 @@ export function SearchUrls(props){
                     + `&d_tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
                     + `&d_gender=${props.gender === -1 ? '' : props.gender}`
                     + `&d_rtb=${props.rtbStatus === -1 ? '' : 1}`
-                    + `&d_breed=${breeds !== [] ? breeds.join('%2C') : ''}`
+                    + `&d_breed=${selectedBreeds !== [] ? selectedBreeds.join('%2C') : ''}`
                     + `&d_bodygene=${props.showGeneOptions ? primaryGenes.join('%2C') : ''}`
                     + `&d_winggene=${props.showGeneOptions ? secondaryGenes.join('%2C') : ''}`
-                    + `&d_tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`);
+                    + `&d_tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`
+                    + `&d_element=${elements.join('%2C')}`
+                    + `&d_eye=${eyeTypes.join('%2C')}`
+                    + `&d_id_length=${digits.join('%2C')}`
+                    + `${props.isG1 ? '&d_gen1=1' : ''}`
+                    + `&d_pattern=${patterns.join('%2C')}`);
 
         setSearchUrl(searchBuyUrlStart
                         + `&body_range=${colours[props.primFirstColour].id}-${colours[props.primSecondColour].id}`
@@ -68,10 +109,15 @@ export function SearchUrls(props){
                         + `&tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
                         + `&gender=${props.gender === -1 ? '' : props.gender}`
                         + `&rtb=${props.rtbStatus === -1 ? '' : 1}`
-                        + `&breed=${breeds !== [] ? breeds.join('%2C') : ''}`
+                        + `&breed=${selectedBreeds !== [] ? selectedBreeds.join('%2C') : ''}`
                         + `&bodygene=${props.showGeneOptions ? primaryGenes.join('%2C') : ''}`
                         + `&winggene=${props.showGeneOptions ? secondaryGenes.join('%2C') : ''}`
                         + `&tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`
+                        + `&element=${elements.join('%2C')}`
+                        + `&eyetype=${eyeTypes.join('%2C')}`
+                        + `&id_length=${digits.join('%2C')}` 
+                        + `${props.isG1 ? '&gen1=1' : ''}`
+                        + `&pattern=${patterns.join('%2C')}`
                         + searchBuyUrlEnd);
     },[props]);
 
@@ -98,12 +144,12 @@ export function SearchUrls(props){
 }
 
 function getBreedArray(rarity){
-    let selectedBreeds = [];
+    let filteredBreeds = [];
     if(rarity !== 5)
-        selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.rarity === rarity && value.breed === 0);
+        filteredBreeds = Object.entries(breeds).filter(([_, value]) => value.rarity === rarity && value.isAncient === false);
     else 
-        selectedBreeds = Object.entries(breeds).filter(([_, value]) => value.isAncient === true);
-    return selectedBreeds.map(([key, _]) => key);
+        filteredBreeds = Object.entries(breeds).filter(([_, value]) => value.isAncient === true);
+    return filteredBreeds.map(([key, _]) => key);
 }
 
 function getGeneArray(rarity, geneSlot, isSameBreed, breed){

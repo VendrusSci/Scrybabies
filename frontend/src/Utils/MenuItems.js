@@ -52,6 +52,10 @@ export const menuItems = [
                 title:  'Self-Service Skin Preview',
                 url:    'https://reskin.vendrus.teamfrag.net/selfservice'
             },
+            {
+                title:  'Vista Preview',
+                url:    'https://reskin.vendrus.teamfrag.net/vistas'
+            },
         ]  
     },
     {
