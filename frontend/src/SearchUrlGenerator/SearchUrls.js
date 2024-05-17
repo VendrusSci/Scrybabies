@@ -91,9 +91,9 @@ export function SearchUrls(props){
                     + `&d_body_range=${colours[props.primFirstColour].id}-${colours[props.primSecondColour].id}`
                     + `&d_wings_range=${colours[props.secFirstColour].id}-${colours[props.secSecondColour].id}`
                     + `&d_tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
-                    + `&d_gender=${props.gender === -1 ? '' : props.gender}`
-                    + `&d_rtb=${props.rtbStatus === -1 ? '' : 1}`
-                    + `&d_breed=${selectedBreeds !== [] ? selectedBreeds.join('%2C') : ''}`
+                    + `&d_gender=${parseInt(props.gender) === -1 ? '' : props.gender}`
+                    + `&d_rtb=${parseInt(props.rtbStatus) === -1 ? '' : 1}`
+                    + `&d_breed=${selectedBreeds.length > 0 ? selectedBreeds.join('%2C') : ''}`
                     + `&d_bodygene=${props.showGeneOptions ? primaryGenes.join('%2C') : ''}`
                     + `&d_winggene=${props.showGeneOptions ? secondaryGenes.join('%2C') : ''}`
                     + `&d_tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`
@@ -107,9 +107,9 @@ export function SearchUrls(props){
                         + `&body_range=${colours[props.primFirstColour].id}-${colours[props.primSecondColour].id}`
                         + `&wings_range=${colours[props.secFirstColour].id}-${colours[props.secSecondColour].id}`
                         + `&tert_range=${colours[props.tertFirstColour].id}-${colours[props.tertSecondColour].id}`
-                        + `&gender=${props.gender === -1 ? '' : props.gender}`
-                        + `&rtb=${props.rtbStatus === -1 ? '' : 1}`
-                        + `&breed=${selectedBreeds !== [] ? selectedBreeds.join('%2C') : ''}`
+                        + `&gender=${parseInt(props.gender) === -1 ? '' : props.gender}`
+                        + `&rtb=${parseInt(props.rtbStatus) === -1 ? '' : 1}`
+                        + `&breed=${selectedBreeds.length > 0 ? selectedBreeds.join('%2C') : ''}`
                         + `&bodygene=${props.showGeneOptions ? primaryGenes.join('%2C') : ''}`
                         + `&winggene=${props.showGeneOptions ? secondaryGenes.join('%2C') : ''}`
                         + `&tertgene=${props.showGeneOptions ? tertiaryGenes.join('%2C') : ''}`
