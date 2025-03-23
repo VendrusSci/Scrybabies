@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/vendrussci/scrybabies:2.7.3
+          image: ghcr.io/vendrussci/scrybabies:2.10.10
           ports:
             - containerPort: 80
               name: http
